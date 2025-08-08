@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cn.ksmcbrigade.iib.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "iib.refmap.json",
+  "mixins": [
+    "PlayerMixin",
+    "ServerPlayerMixin",
+    "SlotMixin",
+    "fix.InventorMenuMixin",
+    "fix.InventoryMixin"
+  ],
+  "client": [
+    "InventoryContainerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
