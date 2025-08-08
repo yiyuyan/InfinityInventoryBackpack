@@ -42,8 +42,11 @@ public abstract class PlayerMixin extends LivingEntity implements IForgeEntity, 
         JsonArray array = new JsonArray();
         for (List<ItemStack> arrayList : infinityinventorybackpack$arrayLists) {
             JsonArray array1 = new JsonArray();
-            for (ItemStack stack : arrayList) {
-                array1.add(NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, stack.save(new CompoundTag())));
+            for (int i = 0; i < arrayList.size(); i++) {
+                JsonObject object = new JsonObject();
+                object.addProperty("id",i);
+                object.add("stack",NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, arrayList.get(i).save(new CompoundTag())));
+                array1.add(object);
             }
             array.add(array1);
         }
@@ -62,7 +65,14 @@ public abstract class PlayerMixin extends LivingEntity implements IForgeEntity, 
                 if(jsonElement instanceof JsonArray object){
                     ArrayList<ItemStack> stacks = new ArrayList<>();
                     for (JsonElement items : object) {
-                        stacks.add(ItemStack.of((CompoundTag) JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE,items)));
+                        if(items instanceof JsonObject jsonObject && jsonObject.has("stack")){
+                            if(jsonObject.has("id")){
+                                stacks.set(jsonObject.get("id").getAsInt(),ItemStack.of((CompoundTag) JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE,jsonObject.get("stack"))));
+                            }
+                            else{
+                                stacks.add(ItemStack.of((CompoundTag) JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE,jsonObject.get("stack"))));
+                            }
+                        }
                     }
                     infinityinventorybackpack$arrayLists.add(stacks);
                 }
