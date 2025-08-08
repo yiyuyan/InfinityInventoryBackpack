@@ -12,6 +12,7 @@
     "fix.InventoryMixin"
   ],
   "client": [
+    "CreativeInventoryContainerMixin",
     "InventoryContainerMixin"
   ],
   "injectors": {
